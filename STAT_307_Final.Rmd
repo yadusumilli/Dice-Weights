@@ -28,7 +28,6 @@ Yam <-read_excel("STAT 307 Project Data.xlsx", sheet = "Yamini")
 Ann <-read_excel("STAT 307 Project Data.xlsx", sheet = "Annemarie")
 
 d20 <- c(Akhil$d20,Yam$d20,Ann$d20)
-
 d12 <- c(Akhil$d12,Yam$d12,Ann$d12)
 d10 <- c(Akhil$d10,Yam$d10,Ann$d10)
 d8 <- c(Akhil$d8,Yam$d8,Ann$d8)
@@ -37,6 +36,112 @@ d4 <- c(Akhil$d4,Yam$d4,Ann$d4)
 
 
 
+d20_2 <- c(Akhil$d20_2,Yam$d20_2,Ann$d20_2)
+d12_2 <- c(Akhil$d12_2,Yam$d12_2,Ann$d12_2)
+d10_2 <- c(Akhil$d10_2,Yam$d10_2,Ann$d10_2)
+d8_2 <- c(Akhil$d8_2,Yam$d8_2,Ann$d8_2)
+d6_2 <- c(Akhil$d6_2,Yam$d6_2,Ann$d6_2)
+d4_2 <- c(Akhil$d4_2,Yam$d4_2,Ann$d4_2)
+
+
+
+d_20a <- c(d20,d20_2)
+d_12a <- c(d12,d12_2)
+d_10a <- c(d10,d10_2)
+d_8a <- c(d8,d8_2)
+d_6a <- c(d6,d6_2)
+d_4a <- c(d4,d4_2)
+
+
+fivenum(d_20a)
+fivenum(d_12a)
+fivenum(d_10a)
+fivenum(d_8a)
+fivenum(d_6a)
+fivenum(d_4a)
+means <- c(mean(Akhil$d20),mean(Akhil$d12),mean(Akhil$d10),mean(Akhil$d8),mean(Akhil$d6),mean(Akhil$d4),mean(Akhil$d20_2),mean(Akhil$d12_2),mean(Akhil$d10_2),mean(Akhil$d8_2),mean(Akhil$d6_2),mean(Akhil$d4_2),mean(Yam$d20),mean(Yam$d12),mean(Yam$d10),mean(Yam$d8),mean(Yam$d6),mean(Yam$d4),mean(Yam$d20_2),mean(Yam$d12_2),mean(Yam$d10_2),mean(Yam$d8_2),mean(Yam$d6_2),mean(Yam$d4_2),mean(Ann$d20),mean(Ann$d12),mean(Ann$d10),mean(Ann$d8),mean(Ann$d6),mean(Ann$d4),mean(Ann$`d20 (2)`),mean(Ann$d12_2),mean(Ann$d10_2),mean(Ann$d8_2),mean(Ann$d6_2),mean(Ann$d4_2) )
+
+expected <- rep(c(10.5,6.5,5.5,4.5,3.5,2.5),6)
+
+mean(Yam$d20)
+mean(Yam$d20_2)
+
+mean(Akhil$d20)
+mean(Akhil$d20_2)
+
+mean(Ann$d20)
+mean(Ann$`d20 (2)`)
+abs(mean(Yam$d20_2) - 10.5)
+
+biases <- c()
+for(i in 1:36){
+  biases <- c(bias,abs(means[i]-expected[i]))
+}
+biases
+
+bias_d20 <- c(bias[1],  bias[7],  bias[13], bias[19],bias[25],bias[31])
+bias_d12 <- c(bias[2],  bias[8],  bias[14], bias[20],bias[26],bias[32])
+bias_d10 <- c(bias[3],  bias[9],  bias[15], bias[21],bias[27],bias[33])
+bias_d8 <- c(bias[4],  bias[10],  bias[16], bias[22],bias[28],bias[34])
+bias_d6 <- c(bias[5],  bias[11],  bias[17], bias[23],bias[29],bias[35])
+bias_d4 <- c(bias[6],  bias[12],  bias[18], bias[24],bias[30],bias[36])
+
+data <- data.frame(rbind(bias_d20, bias_d12, bias_d10, bias_d8,bias_d6,bias_d4))
+
+
+bias <- c(bias_d20, bias_d12, bias_d10, bias_d8,bias_d6,bias_d4)
+
+
+names <- c("Akhil","Yamini","Annemarie")
+
+blocks <- as.factor(rep(names, each = 12))
+blocks
+
+d_num <- c(20,12,10,8,6,4)
+treatments <- as.factor(rep(d_num, times = 6))
+treatments
+
+
+bias_anov <- lm(bias~treatments + blocks)
+anova(bias_anov)
+
+
+resid <- bias_anov$residuals
+qqnorm(resid)
+qqline(resid)
+
+bias_anov$
+
+shapiro.test(bias_anov$residuals)
+
+
+
+bartlett.test(bias_anov,treatments)
+
+bartlett.test(y,blocks)
+
+
+
+
+bias <- data.frame(bias = b)
+bias <- c()
+
+bias1
+
+biases
+
+data.frame()
+
+
+
+sd(d12)/mean(d12)
+
+sd(d6)/mean(d6)
+
+
+sd(d8)/mean(d8)
+
+sd(d4)/mean(d4)
 
 data_akhil <- c(Akhil$d4,Akhil$d6,Akhil$d8,Akhil$d10,Akhil$d12,Akhil$d20)
 
@@ -51,9 +156,8 @@ dice_val <- c(data_akhil,data_ann,data_yam)
 blocks <- as.factor(rep(1:3, each = 600))
 blocks
 
-treatments <- as.factor(rep(1:6, each = 100,times=3))
+treatments <- as.factor(rep(, each = 100,times=3))
 treatments
-
 
 
 par(mfrow=c(1,2))  # A 1 by 2 panel of plots
@@ -61,7 +165,7 @@ boxplot(data_all~blocks, xlab="blocks")
 boxplot(data_all~treatments, xlab="treatments")
 
 
-
+dv <- as.factor(dice_val)
 g <- lm(dice_val~treatments + blocks)
 anova(g)
 
@@ -72,16 +176,34 @@ qqnorm(resid)
 qqline(resid)
 
 shapiro.test(g$residuals)
-
+hist(d20)
 
 bartlett.test(dice_val,treatments)
+var(d20)
+sd(d12)
+sd(d4)
+var(d12)
+mean(d20)
+mean(d12)
+mean(d10)
+mean(d8)
+mean(d6)
+mean(d4)
+s <- sd(d12)
+2.576 * (s/sqrt(300))
 
+
+
+sqrt(var(d20))
+var(d12)
+var()
+hist(d20)
 
 boxplot(d20)
 fivenum(d20)
 fivenum(d12)
 fivenum(d10)
-fivenum(d8)
+
 fivenum(d6)
 fivenum(d4)
 
@@ -96,6 +218,48 @@ fits <- g$fitted.values #there should be no pattern
 plot(fits,resid)
 abline(h=0)
 #no pattern i
+
+length(p)
+table(d20)
+table(d12)
+table(d10)
+table(d8)
+table(d6)
+table(d4)
+d20_chi <- c(12,13,15,20,20,21,14,19,17,13,19,13,9,13,14,14,12,19,14,9)
+d12_chi <- c(24, 32, 23, 38,19 ,33, 28, 26, 21, 19, 22, 15) 
+p2 <- c(0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333,0.0833333333)
+length(p2)
+
+d20_chi <- c(table(d20))
+p1 <- rep(0.05,20)
+
+
+
+d12_chi <- c(table(d12))
+p2 <- rep(1/12,12)
+
+
+d10_chi <- c(table(d10))
+p3 <- rep(0.1,10)
+
+d8_chi <- c(table(d8))
+p4 <- rep(0.125,8)
+
+d6_chi <- c(table(d6))
+p5 <- rep(1/6,6)
+
+d4_chi <- c(table(d4))
+p6 <- rep(1/4,4)
+
+
+chisq.test(x=d20_chi,p=p1)
+chisq.test(x=d12_chi,p=p2)
+chisq.test(x=d10_chi,p=p3)
+chisq.test(x=d8_chi,p=p4)
+chisq.test(x=d6_chi,p=p5)
+chisq.test(x=d4_chi,p=p6)
+
 
 ```
 
