@@ -88,12 +88,12 @@ table(d6)
 table(d4)
 
 # Bar plots to assess distribution for each die
-barplot(table(d_4a), xlab="Values", ylab="Frequency")
-barplot(table(d_6a), xlab="Values", ylab="Frequency")
-barplot(table(d_8a), xlab="Values", ylab="Frequency")
-barplot(table(d_10a), xlab="Values", ylab="Frequency")
-barplot(table(d_12a), xlab="Values", ylab="Frequency")
-barplot(table(d_20a), xlab="Values", ylab="Frequency")
+barplot(table(d_4a), xlab="Values", ylab="Frequency", main = "Histogram for d4")
+barplot(table(d_6a), xlab="Values", ylab="Frequency", main = "Histogram for d6")
+barplot(table(d_8a), xlab="Values", ylab="Frequency", main = "Histogram for d8")
+barplot(table(d_10a), xlab="Values", ylab="Frequency", main = "Histogram for d10")
+barplot(table(d_12a), xlab="Values", ylab="Frequency", main = "Histogram for d12")
+barplot(table(d_20a), xlab="Values", ylab="Frequency", main = "Histogram for d20")
 ```
 
 ```{r}
@@ -262,4 +262,20 @@ GTest(x = d10_chi, p=p3)
 GTest(x = d8_chi, p=p4)
 GTest(x = d6_chi, p=p5)
 GTest(x = d4_chi, p=p6)
+
+#ANCOVA
+library(car)
+
+num_sides <- c(rep(20, each=6), rep(12, each=6), rep(10, each=6), rep(8, each=6), rep(6, each=6), rep(4, each=6))
+
+Num_Sides <- num_sides - mean(num_sides)
+operators <- blocks
+
+ancova.data <- data.frame(bias, num_sides, operators, Num_Sides)
+
+anc.dice <- aov(bias ~ Num_Sides + operators, data=ancova.data)
+Anova(anc.dice, typ="III")
+
+shapiro.test(anc.dice$residuals)
+bartlett.test(anc.dice$residuals, operators)
 ```
