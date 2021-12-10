@@ -1,34 +1,35 @@
 ---
-title: "Stat_307_FInal_Project"
-output: html_document
+title: "STAT 307 Project"
+author: "Yamini Adusumilli, Annemarie Andaleon, Akhil Ghosh"
+date: "12/14/2021"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '3'
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
 ```{r pressure, echo=FALSE}
-library(readxl) 
+library(readxl)
+library(DescTools)
+
 Akhil <-read_excel("STAT 307 Project Data.xlsx", sheet = "Akhil")
 Yam <-read_excel("STAT 307 Project Data.xlsx", sheet = "Yamini")
 Ann <-read_excel("STAT 307 Project Data.xlsx", sheet = "Annemarie")
+```
 
+``` {r}
+# EDA
 
-## EDA
+# First Replicate 
+# 100 dice rolls for each die 
 
 d20 <- c(Akhil$d20,Yam$d20,Ann$d20)
 d12 <- c(Akhil$d12,Yam$d12,Ann$d12)
@@ -37,7 +38,8 @@ d8 <- c(Akhil$d8,Yam$d8,Ann$d8)
 d6 <- c(Akhil$d6,Yam$d6,Ann$d6)
 d4 <- c(Akhil$d4,Yam$d4,Ann$d4)
 
-
+# Second Replicate 
+# 100 dice rolls for each die
 
 d20_2 <- c(Akhil$d20_2,Yam$d20_2,Ann$d20_2)
 d12_2 <- c(Akhil$d12_2,Yam$d12_2,Ann$d12_2)
@@ -46,7 +48,8 @@ d8_2 <- c(Akhil$d8_2,Yam$d8_2,Ann$d8_2)
 d6_2 <- c(Akhil$d6_2,Yam$d6_2,Ann$d6_2)
 d4_2 <- c(Akhil$d4_2,Yam$d4_2,Ann$d4_2)
 
-
+# All data combined for each die
+# 600 dice rolls total for each die
 
 d_20a <- c(d20,d20_2)
 d_12a <- c(d12,d12_2)
@@ -54,30 +57,27 @@ d_10a <- c(d10,d10_2)
 d_8a <- c(d8,d8_2)
 d_6a <- c(d6,d6_2)
 d_4a <- c(d4,d4_2)
+```
 
-
+```{r}
+# 5-number summaries for each die 
 fivenum(d_20a)
 fivenum(d_12a)
 fivenum(d_10a)
 fivenum(d_8a)
 fivenum(d_6a)
 fivenum(d_4a)
+```
 
-
-
+```{r}
+# CV
 sd(d12)/mean(d12)
-
 sd(d6)/mean(d6)
-
-
 sd(d8)/mean(d8)
-
 sd(d4)/mean(d4)
 
 data_akhil <- c(Akhil$d4,Akhil$d6,Akhil$d8,Akhil$d10,Akhil$d12,Akhil$d20)
-
 data_yam <- c(Yam$d4,Yam$d6,Yam$d8,Yam$d10,Yam$d12,Yam$d20)
-
 data_ann <- c(Ann$d4,Ann$d6,Ann$d8,Ann$d10,Ann$d12,Ann$d20)
 
 table(d20)
@@ -87,18 +87,17 @@ table(d8)
 table(d6)
 table(d4)
 
-
-
-barplot(table(d_12a), xlab="Values", ylab="Frequency")
-
-barplot(table(d_20a), xlab="Values", ylab="Frequency")
+# Bar plots to assess distribution for each die
 barplot(table(d_4a), xlab="Values", ylab="Frequency")
 barplot(table(d_6a), xlab="Values", ylab="Frequency")
 barplot(table(d_8a), xlab="Values", ylab="Frequency")
 barplot(table(d_10a), xlab="Values", ylab="Frequency")
+barplot(table(d_12a), xlab="Values", ylab="Frequency")
+barplot(table(d_20a), xlab="Values", ylab="Frequency")
+```
 
-## Calculating Bias
-
+```{r}
+# Calculating Bias (Our response variable)
 
 means <- c(mean(Akhil$d20),mean(Akhil$d12),mean(Akhil$d10),mean(Akhil$d8),mean(Akhil$d6),mean(Akhil$d4),mean(Akhil$d20_2),mean(Akhil$d12_2),mean(Akhil$d10_2),mean(Akhil$d8_2),mean(Akhil$d6_2),mean(Akhil$d4_2),mean(Yam$d20),mean(Yam$d12),mean(Yam$d10),mean(Yam$d8),mean(Yam$d6),mean(Yam$d4),mean(Yam$d20_2),mean(Yam$d12_2),mean(Yam$d10_2),mean(Yam$d8_2),mean(Yam$d6_2),mean(Yam$d4_2),mean(Ann$d20),mean(Ann$d12),mean(Ann$d10),mean(Ann$d8),mean(Ann$d6),mean(Ann$d4),mean(Ann$`d20 (2)`),mean(Ann$d12_2),mean(Ann$d10_2),mean(Ann$d8_2),mean(Ann$d6_2),mean(Ann$d4_2) )
 
@@ -112,7 +111,7 @@ mean(Akhil$d20)
 mean(Akhil$d20_2)
 
 mean(Ann$d20)
-mean(Ann$`d20 (2)`)
+mean(Ann$d20_2)
 
 
 bias <- c()
@@ -129,8 +128,13 @@ bias_d8 <- c(bias[4],  bias[10],  bias[16], bias[22],bias[28],bias[34])
 bias_d6 <- c(bias[5],  bias[11],  bias[17], bias[23],bias[29],bias[35])
 bias_d4 <- c(bias[6],  bias[12],  bias[18], bias[24],bias[30],bias[36])
 
-#Making Data Frame
+# Making Data Frame
+
 data <- data.frame(rbind(bias_d20, bias_d12, bias_d10, bias_d8,bias_d6,bias_d4))
+```
+
+```{r}
+# RCBD Blocks 
 
 names(data)[1] <- "Block_Akhil1"
 names(data)[2] <- "Block_Akhil2"
@@ -141,17 +145,13 @@ names(data)[4] <- "Block_Yamini2"
 names(data)[5] <- "Block_Annmarie1"
 names(data)[6] <- "Block_Annmarie2"
 
-data
-
 bias <- c(bias_d20, bias_d12, bias_d10, bias_d8,bias_d6,bias_d4)
 
-#Making anova table
-
+# Making ANOVA Table
 
 names <- c("Akhil","Yamini","Annemarie")
 
 blocks <- as.factor(rep(names, times=6,each = 2))
-
 blocks
 
 d_num <- c(20,12,10,8,6,4)
@@ -159,13 +159,14 @@ d_num <- c(20,12,10,8,6,4)
 treatments <- as.factor(rep(d_num, each = 6))
 treatments
 
-
-
 bias_anov <- lm(bias ~ blocks + treatments)
 
 anova(bias_anov)
+```
 
-#checking assumptions
+```{r}
+# Checking Assumptions
+
 resid <- bias_anov$residuals
 qqnorm(resid)
 qqline(resid)
@@ -175,11 +176,9 @@ fits <- bias_anov$fitted.values
 plot(fits,resid)
 abline(h=0)
 
-#Anova does not meet normality assumptions
+# ANOVA does not meet normality assumptions
 
-
-
-## Seeing how assumptions change when outliers replaced with 0 bias
+## Seeing how assumptions change when the outliers are replaced with 0 bias
 bias2 <- bias
 
 bias2[3] <-0.0
@@ -198,60 +197,43 @@ fits2 <- bias_anov2$fitted.values
 plot(fits2,resid2)
 abline(h=0)
 
-#meets normality assumptions when outliers are replaced with bias of 0
+# Meets normality assumptions when the outliers are replaced with bias of 0
+```
 
-
-
-
-
-
+```{r}
 # Did square root transformation
 
-
-
-
 bias_norm <- sqrt(bias)
-
-
 
 bias_anov3 <- lm(bias_norm ~ treatments + blocks)
 anova(bias_anov3)
 
-#Treatments still significant!
+# Treatments still significant!
 
 resid3 <- bias_anov3$residuals
 qqnorm(resid3)
 qqline(resid3)
 shapiro.test(bias_anov3$residuals)
 
-#Now it passes normality assumption
+# Now it passes normality assumption
+
 bartlett.test(bias_norm,treatments)
 fits3 <- bias_anov3$fitted.values
 plot(fits3,resid3)
 abline(h=0)
 
+# friedman.test(bias,treatments,blocks) not working
+```
 
-
-
-#friedman.test(bias,treatments,blocks) not working
-
-
-
-
-
-#Additional analysis
-
-#Initially, used chi-square test
-
+```{r}
+# Additional analysis
+# Initially, used chi-square test
 
 d20_chi <- c(table(d_20a))
 p1 <- rep(0.05,20)
 
-
-
 d12_chi <- c(table(d_12a))
 p2 <- rep(1/12,12)
-
 
 d10_chi <- c(table(d_10a))
 p3 <- rep(0.1,10)
@@ -265,9 +247,6 @@ p5 <- rep(1/6,6)
 d4_chi <- c(table(d_4a))
 p6 <- rep(1/4,4)
 
-
-
-
 chisq.test(x=d20_chi,p=p1)
 chisq.test(x=d12_chi,p=p2)
 chisq.test(x=d10_chi,p=p3)
@@ -275,20 +254,12 @@ chisq.test(x=d8_chi,p=p4)
 chisq.test(x=d6_chi,p=p5)
 chisq.test(x=d4_chi,p=p6)
 
+# Decided to do G test cause expected value for chi-squared test should at least be 5, and for the d8 to d4 it is not
 
-
-
-#Decided to do G test cause expected value for chi-squared test should at least be 5, and for the d8 to d4 it is not
-
-library(DescTools)
 GTest(x = d20_chi, p=p1)
 GTest(x = d12_chi, p=p2)
 GTest(x = d10_chi, p=p3)
 GTest(x = d8_chi, p=p4)
 GTest(x = d6_chi, p=p5)
 GTest(x = d4_chi, p=p6)
-
-
-
 ```
-
