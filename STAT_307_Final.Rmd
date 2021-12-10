@@ -276,6 +276,8 @@ ancova.data <- data.frame(bias, num_sides, operators, Num_Sides)
 anc.dice <- aov(bias ~ Num_Sides + operators, data=ancova.data)
 Anova(anc.dice, typ="III")
 
+anc.dice$coefficients
+
 shapiro.test(anc.dice$residuals)
 bartlett.test(anc.dice$residuals, operators)
 ```
